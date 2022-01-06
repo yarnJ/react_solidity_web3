@@ -5,13 +5,18 @@ import { useState, useEffect } from "react";
 
 const HomeComponent = () => {
 
-  const [account, setaccount] = useState([]);
+  const [account, setaccount] = useState();
 
   useEffect(() => {
     const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
-    const accounts = web3.eth.requestAccounts();    
-    setaccount(accounts[0]);
-    console.log(accounts[Promise]);
+    const accounts = web3.eth.requestAccounts(); 
+    console.log(accounts[0]);   
+    
+    Promise.all([accounts]).then((values) => {
+      console.log(values[0]);
+      console.log(web3);
+      setaccount(values[0]);
+    })
   }, [])
 
   return (
